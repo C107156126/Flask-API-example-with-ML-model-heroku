@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import pickle
+import pyodbc
 import pandas as pd
 import json
 import heapq
@@ -10,6 +11,15 @@ from json import dumps
 from flask import Flask, make_response
 app = Flask(__name__)
 CORS(app)
+cnxn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=tcp:employee0723.database.windows.net,1433;Database=employee;Uid=manager;Pwd={@Zxcdsaqwe44};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;')
+cursor = cnxn.cursor()
+@app.route('/sqldata')
+def data_quary():
+    query_veg = "SELECT * from dbo.employee "
+    df_veg = pd.read_sql(query_veg, cnxn)
+    queryjs = df_veg.to_json(orient = 'records')
+    query_data=json.loads(queryjs)
+    return make_response(dumps(query_data))
 @app.route('/test')
 def userin():
      return 'hello!!'
