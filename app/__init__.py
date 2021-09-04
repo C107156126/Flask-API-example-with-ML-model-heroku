@@ -20,7 +20,7 @@ cols_sql=['Age','Attrition','BusinessTravel','DailyRate','Department','DistanceF
 
 CORS(app)
 def userin():
-     return 'hello!!23283y823'
+     return 'hello!!23283y823238293'
 @app.route('/getdata')
 def getdata():
      tmp=[]
